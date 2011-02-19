@@ -34,4 +34,9 @@ except ImportError:
         # 3/ no charts
         from ReportRenderHtmlBase import RenderHtmlBase as RenderHtml
 
-from ReportRenderHtmlGnuPlot import RenderHtmlGnuPlot as RenderHtml
+from ReportRenderHtmlMatplotlib import MATPLOTLIB_DEFAULT
+if MATPLOTLIB_DEFAULT:
+    from ReportRenderHtmlMatplotlib import RenderHtmlMatplotlib as RenderHtml
+else:
+    from ReportRenderHtmlGnuPlot import RenderHtmlGnuPlot as RenderHtml
+
