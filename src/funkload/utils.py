@@ -163,6 +163,17 @@ def trace(message):
 # ------------------------------------------------------------
 # xmlrpc
 #
+def xmlrpc_get_seq(host, port):
+    """Get credential thru xmlrpc credential_server."""
+    url = "http://%s:%s" % (host, port)
+    server = ServerProxy(url, allow_none=True)
+    try:
+        return server.getSeq()
+    except SocketError:
+        raise SocketError(
+            'No Credential server reachable at %s, use fl-credential-ctl '
+            'to start the credential server.' % url)
+
 def xmlrpc_get_credential(host, port, group=None):
     """Get credential thru xmlrpc credential_server."""
     url = "http://%s:%s" % (host, port)
@@ -224,7 +235,7 @@ def green_str(text):
 
 def is_html(text):
     """Simple check that return True if the text is an html page."""
-    if '<html' in text[:300].lower():
+    if text is not None and '<html' in text[:300].lower():
         return True
     return False
 

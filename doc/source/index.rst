@@ -21,12 +21,14 @@ enables to do functional and load testing of web application.
    usage
    faq
    development
-
+   reporting
+   links
 
 
 Indices and tables
 ==================
 
+* `PDF version of the documentation <./funkload.pdf>`_
 * Changes_
 * Glossary_
 * Links_

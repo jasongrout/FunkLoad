@@ -1,27 +1,18 @@
-=================
-FunkLoad_ INSTALL
-=================
+Installation
+===============
 
-:author: Benoit Delbosc
+This document describes how to install the FunkLoad_ tool.
 
-:address: bdelbosc _at_ nuxeo.com
-
-:revision: $Id$
-
-:abstract: This document describes how to install the FunkLoad_ tool.
-
-.. sectnum::    :depth: 1
-
-.. contents:: Table of Contents
+.. toctree::
 
 
+Quick installation guide for Debian and Ubuntu
+-----------------------------------------------
 
-Quick installation guide for Debian Lenny/Ubuntu 8.10, 9.04, 10.04
---------------------------------------------------------------------
+With Debian Lenny or Ubuntu 8.10, 9.04, 10.04 ..., you can install the
+latest snapshot this way ::
 
-You can install the latest snapshot this way ::
-
-  sudo aptitude install python-dev python-xml python-setuptools \
+  sudo aptitude install python-dev python-setuptools \
        python-webunit python-docutils gnuplot
   sudo aptitude install tcpwatch-httpproxy --without-recommends
   sudo easy_install -f http://funkload.nuxeo.org/snapshots/ -U funkload
@@ -29,6 +20,11 @@ You can install the latest snapshot this way ::
 To install the latest stable release replace the last line with ::
  
   sudo easy_install -U funkload
+
+If you want to test the new beta distributed mode (since 1.14.0) you
+need to install paramiko and virtualenv::
+  
+  sudo aptitude install python-paramiko, python-virtualenv
 
 That's all.
 
@@ -38,7 +34,7 @@ You can find an old 1.10.0 `Debian package here <http://funkload.nuxeo.org/debia
 
 
 
-OS support
+Other OS
 ----------
 
 Some parts are OS specific:
@@ -52,27 +48,21 @@ also rename the scripts with a ``.py`` extension.
 
 
 Required packages
------------------
+~~~~~~~~~~~~~~~~~~~
 
 * libexpat1
 
+* funkload 1.14.0 requires python >= 2.5
+
 * python 2.4 is required by the test runner only if you want to launch
   python doctest, other stuff work fine with a python 2.3.5.
-  python 2.5 is supported with funkload > 1.6.0
+  python >= 2.5 are supported with funkload > 1.6.0
 
-* python distutils, on a Debian system::
+* python distutils
 
-    sudo aptitude install python-dev
+* python xml
 
-* python xml, for example on a Debian system::
-
-    sudo aptitude install python-xml
-
-* EasyInstall_, either use a package::
-
-    sudo aptitude install python-setuptools
-
-  or download ez_setup.py_, and run it::
+* EasyInstall_, either use a package or download ez_setup.py_, and run it::
 
     cd /tmp
     wget http://peak.telecommunity.com/dist/ez_setup.py
@@ -83,17 +73,12 @@ Required packages
 
 
 Optional packages
------------------
+~~~~~~~~~~~~~~~~~~
 
-* To produce charts with FunkLoad >= 1.9.0: gnuplot 4.2
-  on Lenny, hardy:
-
-     sudo aptitude install gnuplot
-
-  or visit the http://www.gnuplot.info/ site.
+* To produce charts with FunkLoad >= 1.9.0: gnuplot 4.2, either use a
+  package or visit the http://www.gnuplot.info/ site.
 
   gnuplot (or wgnuplot for win) must be in the executable path.
-
 
 * The recorder use TCPWatch_ which is not yet available using easy_install::
 
@@ -105,87 +90,77 @@ Optional packages
     sudo python setup.py install
 
 
-* To produce charts with FunkLoad = 1.8.0 : python-gdchart2, on Debian::
-
-    sudo aptitude install python-gdchart2
-
-
-* To produce charts with FunkLoad < 1.8.0: python-gdchart (0.6.1-8 is fine), on Debian::
-
-    sudo apt-get install python-gdchart
-
-  If the package is only available for python2.3 you may try to copy the
-  ``gdchart.so`` to the ``python2.4/site-pacakges``.
-
-  On non Debian systems you can build the gdchart following the
-  `Francois Meehan`_'s page.
-
-  On Fedora FC4 (tested with python 2.3.5)::
-
-    cd /tmp
-    wget http://ftp.debian.org/debian/pool/main/p/python-gdchart/python-gdchart_0.6.1.orig.tar.gz
-    tar xzvf python-gdchart_0.6.1.orig.tar.gz
-    cd python-gdchart-0.6.1.orig/
-    wget http://funkload.nuxeo.org/patch_gdc_py.diff
-    wget http://funkload.nuxeo.org/patch_gdc_pie.diff
-    patch -p0 < patch_gdc_py.diff
-    patch -p0 < patch_gdc_pie.diff
-    # change in Makefile
-    # PY_INCLUDE = -I/usr/local/include/python2.0
-    # to your corresponding path
-    make
-    # as a 'root' copy produced gdchart.so into your python's site-packages
-    # directory
-
-
-  Should work also for Fedora FC5, it requires libpng-devel and libjpeg-dev.
-
-  No idea under windows.
-
-
-
 Installation
-------------
+~~~~~~~~~~~~~
 
 Easy installation
-~~~~~~~~~~~~~~~~~
+__________________
 
-Install the latest stable package::
+* Install the latest stable package::
 
-  sudo easy_install -U funkload
+    sudo easy_install -U funkload
 
-This will install FunkLoad_, webunit_ and docutils_ eggs.
+  This will install FunkLoad_, webunit_ and docutils_ eggs.
 
+* Install the latest snapshot version::
 
-Latest snapshot version
-~~~~~~~~~~~~~~~~~~~~~~~~
+    sudo easy_install -f http://funkload.nuxeo.org/snapshots/ -U funkload
 
-Install the latest development snapshot available::
+* Install the development version
 
-  sudo easy_install -f http://funkload.nuxeo.org/snapshots/ -U funkload
+  If you want to try the latest unstable sources from git ::
 
+    git clone git://github.com/nuxeo/FunkLoad.git
 
+  then::
 
-Development version
-~~~~~~~~~~~~~~~~~~~
-
-If you want to try the latest unstable sources from svn ::
-
-    easy_install -eb /tmp funkload==dev
-
-or::
-
-    svn co http://svn.nuxeo.org/pub/funkload/trunk /tmp/funkload
-
-then::
-
-    cd /tmp/funkload/
+    cd FunkLoad/
     python setup.py build
     sudo python setup.py install
 
 
+Installing without sudo power
+______________________________
+
+Get the FunkLoad package from pypi:
+http://pypi.python.org/pypi/funkload/ or a snapshot from:
+http://funkload.nuxeo.org/snapshots/
+
+Then use the buildout::
+
+  tar zxf funkload-1.14.0.tar.gz
+  cd funkload-1.14.0
+  python bootstrap.py
+  bin/buildout
+
+Then your executable are ready on the bin directory.
+
+
+Installing without network access
+___________________________________
+
+Transfer all the archives from http://funkload.nuxeo.org/3dparty/ in a
+directory::
+
+  mkdir -p /tmp/fl
+  cd /tmp/fl
+  wget -r -l1 -nd http://funkload.nuxeo.org/3dparty/
+  
+Transfer the latest FunkLoad package
+::
+ 
+  # get setuptools package and untar
+  python setup.py install
+  
+  easy_install docutils*
+  easy_install tcpwatch*
+  easy_install webunit*
+  easy_install funkload*
+
+  
+
 Test it
--------
+--------
 
 Install the FunkLoad_ examples::
 
@@ -205,7 +180,7 @@ See ``funkload-demo/README`` for others examples.
 
 
 Problems ?
-----------
+-----------
 
 * got a ::
 
@@ -279,26 +254,6 @@ Problems ?
     sudo rm /usr/local/bin/fl-*
 
 
-* No charts on your report. You need to have gdchart python module check
-  ``import gdchart``. See the `Optional packages`_ for help on how to
-  install gdchart.
-
-
-* While building report you Got ::
-
-   File "/usr/bin/fl-build-report", line 25, in ?
-   File "build/bdist.linux-i686/egg/funkload/ReportBuilder.py", line 216, in main
-   File "build/bdist.linux-i686/egg/funkload/ReportRenderer.py", line 612, in render
-   File "build/bdist.linux-i686/egg/funkload/ReportRenderer.py", line 635, in createCharts
-   File "build/bdist.linux-i686/egg/funkload/ReportRenderer.py", line 869, in createMonitorCharts
-   File "build/bdist.linux-i686/egg/funkload/ReportRenderer.py", line 938, in createMonitorChart
-   AttributeError: 'module' object has no attribute 'option'
-
- python-gdchart2 is installed on your system and FunkLoad_ expects
- python-gdchart. Hopefully you can give a try to the latest snapshot
- (>=1.8.0a see section above) that is working with python-gdchart2.
-
-
 * While runing a test you got ::
 
     Traceback (most recent call last):
@@ -322,31 +277,20 @@ Problems ?
   To view the original error just run the testcase using python instead of
   fl-run-test (``python your_test_case.py``).
 
-
-
---------------------------
-
-See README_ for more information about FunkLoad_.
-
-See CHANGES_ for information on FunkLoad_ packages.
-
-See demo_ folder for other examples.
+  This is fixed since 1.14.
 
 
 .. _FunkLoad: http://funkload.nuxeo.org/
 .. _webunit: http://mechanicalcat.net/tech/webunit/
-.. _README: README.html
-.. _CHANGES: CHANGES.html
-.. _demo: http://svn.nuxeo.org/trac/pub/browser/funkload/trunk/funkload/demo/
 .. _EasyInstall: http://peak.telecommunity.com/DevCenter/EasyInstall
 .. _easy_install: http://peak.telecommunity.com/DevCenter/EasyInstall#command-line-options
 .. _ez_setup.py: http://peak.telecommunity.com/dist/ez_setup.py
 .. _docutils: http://docutils.sourceforge.net/
 .. _TCPWatch: http://hathawaymix.org/Software/TCPWatch/
-.. _`Francois Meehan`: http://moinmoin.wikiwikiweb.de/FrancoisMeehan
 
 
 .. Local Variables:
 .. mode: rst
 .. End:
 .. vim: set filetype=rst:
+

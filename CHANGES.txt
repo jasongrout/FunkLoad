@@ -6,8 +6,6 @@ FunkLoad_ CHANGES
 
 :address: bdelbosc _at_ nuxeo.com
 
-:revision: $Id$
-
 :abstract: This document describes changes between FunkLoad_ versions.
 
 .. contents:: Table of Contents
@@ -19,9 +17,78 @@ FunkLoad GIT master
 
 :git: https://github.com/nuxeo/FunkLoad
 
-:Target: 1.14.1
+:Target: 1.16.0
 
 
+FunkLoad 1.15.0
+------------------
+
+:Package: http://pypi.python.org/packages/source/f/funkload/funkload-1.15.0.tar.gz
+
+:github: https://github.com/nuxeo/FunkLoad/tree/1.15.0
+
+:Released date: 2011-03-11
+
+
+New features
+~~~~~~~~~~~~~
+
+* Now supporting emacs Org-mode_ text format as report output. This
+  enable to edit a report as plain text and to produce professional
+  PDF reports througth the Org-mode_ LaTeX export.
+
+  Here is an example of a `PDF 
+  <http://funkload.nuxeo.org/report-example/test_seam_java6.pdf>`_ and
+  an `Org-mode report 
+  <http://funkload.nuxeo.org/report-example/test_seam_java6.org>`_.
+
+  You need to build the HTML report first::
+  
+    fl-build-report --html funkload.xml
+    Creating html report: ...done: 
+    /tmp/test_foo-20110304T160328/index.html
+    # then create the org file
+    fl-build-report --org funkload.xml > /tmp/test_foo-20110304T160328/index.org
+    emacs /tmp/test_foo-20110304T160328/index.org
+    # then export as PDF C-c C-e d 
+    # refer to the org-mode site for latex exports requirements
+
+* New `trend report
+  <http://funkload.nuxeo.org/report-example/trend-report/>`_ to
+  display evolution of performances over time. Just use the
+  ``--trend`` option of the ``fl-build-report`` command.
+
+* The credential server can serve a sequence. Using ``xmlrpc_get_seq``
+  threads can share a sequence::
+
+    from funkload.utils import xmlrpc_get_seq
+    ...
+    seq = xmlrpc_get_seq()
+
+* Source migrated from svn to git, hosted in gigthub
+  https://github.com/nuxeo/FunkLoad
+
+* But tracker moving to github:
+  https://github.com/nuxeo/FunkLoad/issues
+
+* New site and documentation using sphinx: http://funkload.nuxeo.org/
+
+* CPSTestCase and ZopeTestCase have been moved to the demo folder.
+
+* Removing deprecated gdchart support, now relying only on gnuplot. Note that
+  a mathplotlib support is on the TODO_ list.
+
+
+Bug fixes
+~~~~~~~~~
+
+* Fix #3: FunkLoad Failures Fail on Python 2.7
+  https://github.com/nuxeo/FunkLoad/issues#issue/3
+
+* Do not block on read content when content-length is null, patch
+  submited by Bertrand Yvain.
+
+* Fix monitoring network monitoring charts.
 
 FunkLoad 1.14.0
 ------------------
@@ -36,7 +103,7 @@ FunkLoad 1.14.0
 New features
 ~~~~~~~~~~~~~
 
-²w* Switch to Sphinx for documentation, this work is in progress, the
+* Switch to Sphinx for documentation, this work is in progress, the
   draft can be found in
   http://funkload.nuxeo.org/sphinx/. Thanks to Ali-Akber Saifee.
 
@@ -68,7 +135,7 @@ New features
   A typical usage is to add metadata during setUpBench or
   tearDownBench hooks.
 
-* Handling FunkLoad todo list with an org-mode_ file TODO_, replacing 
+* Handling FunkLoad todo list with an Org-mode_ file TODO_, replacing 
   the old trac.
 
 * Mark CPSTestCase as deprecated will be removed in 1.15.
@@ -272,7 +339,7 @@ Bug fixes
 * Fix regex to check valid resources urls, it was too restrictive.
 
 * Fix cookie support, there was an extra ";" if there was only one cookie,
-  thanks to Daniel Swärd.
+  thanks to Daniel Sward.
 
 * Fixing filename in mime encoding when uploading a file using an absolute
   path.
@@ -377,7 +444,7 @@ New features
   using the new ``Data`` class (see above exemple).
 
 * New `test script
-  <http://svn.nuxeo.org/trac/pub/browser/funkload/trunk/funkload/demo/seam-booking-1.1.5>`_
+  <https://github.com/nuxeo/FunkLoad/tree/master/src/funkload/demo/seam-booking-1.1.5>`_
   provided with ``fl-install-demo`` to bench the JBoss Seam Booking
   application.
 
@@ -855,20 +922,16 @@ FunkLoad 1.0.0
 
 ---------------------------------------------
 
-See the INSTALL_ file for requirement and installation.
-
-See README_ for more information about FunkLoad_.
+More information on the FunkLoad_ site.
 
 
 
 .. _FunkLoad: http://funkload.nuxeo.org/
 .. _EasyInstall: http://peak.telecommunity.com/DevCenter/EasyInstall
 .. _TCPWatch: http://hathawaymix.org/Software/TCPWatch/
-.. _README: README.html
-.. _INSTALL: INSTALL.html
 .. _API: api/index.html
-.. _TODO: TODO.txt
-.. _org-mode: http://orgmode.org/
+.. _TODO: https://github.com/nuxeo/FunkLoad/blob/master/TODO.txt
+.. _Org-mode: http://orgmode.org/
 .. _epydoc: http://epydoc.sourceforge.net/
 .. _cheesecake: http://tracos.org/cheesecake/
 .. _933: http://svn.nuxeo.org/trac/pub/ticket/933
@@ -906,3 +969,5 @@ See README_ for more information about FunkLoad_.
 
 .. Local Variables:
 .. mode: rst
+.. End:
+.. vim: set filetype=rst:
